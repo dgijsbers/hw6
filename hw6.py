@@ -37,7 +37,7 @@ class Student():
 
     # Define the additional method here
     def write_programs(self, programs = 1):
-        self.programs_written += programs
+        self.num_programs += programs
 
 #### DONE WITH STUDENT CLASS DEFINITION
 
@@ -69,10 +69,10 @@ print("\n\n***** Problem 2 *****")
 ## The function should return the new list of accumulated -- mapped! -- 
 #values.
 ## HINT: you should be able to write this in 5 lines of code or fewer! 
-
-
-
-
+def personal_map(self, list1): #(should I use accum? what function object?)
+    my_list = []
+    for x in list1:
+        my_list.append(x)
 
 
 ## [PROBLEM 3]
@@ -93,7 +93,7 @@ def access_third_elem(seq):
 ## End
 
 # Write your equivalent function and assignment statement here
-
+sample_func = (lambda lst_of_things: lst_of_things[2])
 
 ## [PROBLEM 4]
 print("\n\n***** Problem 4 *****")
@@ -106,12 +106,12 @@ programs_written = [10, 500, 20, 131, 46]
 
 # Given that provided code, write one line of code to create a zip iterator
 # instance saved in a variable called student_tups, here:
-
+student_tups = zip(names, seniority, programs_written)
 
 # Then write a line of code to cast the iterator to a list (it should end
 # up as a list of tuples). Save that list in a variable called 
 #student_tups_list.
-
+student_tups_list = list(student_tups)
 
 ## You can test this out with any code you like here, and similar below
 # other problems, but make sure to comment out any code that uses up the 
@@ -125,7 +125,7 @@ print("\n\n***** Problem 5 *****")
 #the student_tups list you just created in Problem 2, and save that list 
 #in a variable called programmers. You should make sure you pass these 
 #tests before continuing, as you'll need this list for problems later on!
-
+programmers = [Student(name) for names in student_tups] #(not sure what to put for first part and if I need an "if" at the end)
 
 
 ## [PROBLEM 6]
@@ -138,7 +138,7 @@ print("\n\n***** Problem 6 *****")
 #in order to create an map instance iterator of numbers representing the 
 #productivity of each student. Save the map iterator in a variable called
 # prod_iter.
-
+prod_iter = map(lambda x:x, programmers)
 ## Write code to cast that iterator to a list. Save that list in the 
 #variable prod_list.
 
