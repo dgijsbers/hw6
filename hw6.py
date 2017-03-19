@@ -225,12 +225,10 @@ def readfiles(alist):
 
 # Define len_check
 def len_check(lines):
-    return (line for line in lines if len(line.split()) > 40)
+    return (line for line in lines if len(line) > 40)
 
-# Define main_filterer
 def main_filterer(alist):
-    for line in readfiles(alist):
-        yield list(len_check(readfiles(line)))
+    yield list(len_check(readfiles(alist)))
 
 
 
@@ -239,9 +237,9 @@ def main_filterer(alist):
 ## Uncomment this code to test so you can see easily what results from 
 #your code. DO uncomment it. DO NOT delete or change it. (You can add
 # other code above while you work, of course.)
-provided_file_names = ["samplehw6_1.txt","samplehw6_2.txt"]
-for ln in main_filterer(provided_file_names):
-    print(ln.rstrip('\n'), end=" ")
+#provided_file_names = ["samplehw6_1.txt","samplehw6_2.txt"]
+#for ln in main_filterer(provided_file_names):
+#    print(ln.rstrip('\n'), end=" ")
 #####
 
 
