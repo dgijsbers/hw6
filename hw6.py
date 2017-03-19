@@ -69,10 +69,11 @@ print("\n\n***** Problem 2 *****")
 ## The function should return the new list of accumulated -- mapped! -- 
 #values.
 ## HINT: you should be able to write this in 5 lines of code or fewer! 
-def personal_map(self, list1): #(should I use accum? what function object?)
+def personal_map(f, list1):
     my_list = []
     for x in list1:
-        my_list.append(x)
+        my_list.append(f(x))
+    return my_list
 
 
 ## [PROBLEM 3]
@@ -117,15 +118,13 @@ student_tups_list = list(student_tups)
 # other problems, but make sure to comment out any code that uses up the 
 #iterator in order to pass the tests!
     
-
-
 ## [PROBLEM 5]
 print("\n\n***** Problem 5 *****")
 # Use a list comprehension to create a list of Student instances out of 
 #the student_tups list you just created in Problem 2, and save that list 
 #in a variable called programmers. You should make sure you pass these 
 #tests before continuing, as you'll need this list for problems later on!
-programmers = [Student(name) for names in student_tups] #(not sure what to put for first part and if I need an "if" at the end)
+programmers = [Student(item[0], item[1], item[2]) for item in student_tups_list]
 
 
 ## [PROBLEM 6]
@@ -138,10 +137,10 @@ print("\n\n***** Problem 6 *****")
 #in order to create an map instance iterator of numbers representing the 
 #productivity of each student. Save the map iterator in a variable called
 # prod_iter.
-prod_iter = map(lambda x:x, programmers)
+prod_iter = map(lambda x: x.num_programs/x.years_UM, programmers)
 ## Write code to cast that iterator to a list. Save that list in the 
 #variable prod_list.
-
+prod_list = list(prod_iter)
 ## You may add a method to the Student class if you wish in order to do 
 #this, but you do not need to. (If you do, make sure you do not create 
     #any syntax errors that keep code/tests from running!)
@@ -156,8 +155,7 @@ print("\n\n***** Problem 7 *****")
 ## But be careful that if you use answers from previous problems, 
 #you use the LISTs you generated, so that all your tests can still 
 #pass and you avoid confusion!
-
-
+names_and_productivities = [(x.name, x.num_programs/x.years_UM) for x in programmers]
 
 ## [PROBLEM 8]
 print("\n\n***** Problem 8 *****")
@@ -166,12 +164,12 @@ print("\n\n***** Problem 8 *****")
     #"Euijin"]) Your result should be an filter object that points to 
 #Student instances. Save that filter iterator in a variable called 
 #long_names.
-
+long_names = filter(lambda x:len(x.name)>=5, programmers)
 
 
 ## Then write code to cast the value of long_names to a list and save 
 #it in the variable long_names_list. 
-
+long_names_list = list(long_names)
 
 
 ## [PROBLEM 9]
@@ -180,12 +178,13 @@ print("\n\n***** Problem 9 *****")
 # Use a list comprehension to generate a LIST of just the names of those
 # Student instances whose name is longer than their seniority (i.e., 
     #["Albert", "Mai", "Dinesh", "Euijin"]). Assign it to a variable 
-#called names_with_not_too_much_seniority.
-
+#called names_with_not_too_much_seniority
+#len(x[0])>(x[1]/
+names_with_not_too_much_seniority = [x[0] for x in student_tups_list if len(x[0])>(x[1])]
 ## Note that you can use another list you have already created for this
 # problem.
-
-
+#print (names_with_not_too_much_seniority)
+#print ("**************")
 
 
 ## [PROBLEM 10]
@@ -217,21 +216,32 @@ print("\n\n***** Problem 10 *****")
 #with those file names! The test below also relies upon these files. Of course, you could also create other files for testing.
 
 # Define readfiles (make sure to close the file reference in the right place)
-
+def readfiles(alist):
+    for f in alist:
+        fileref = open(f, 'r')
+        for line in fileref:
+            yield line
+        fileref.close()
 
 # Define len_check
-
+def len_check(lines):
+    return (line for line in lines if len(line.split()) > 40)
 
 # Define main_filterer
+def main_filterer(alist):
+    for line in readfiles(alist):
+        yield list(len_check(readfiles(line)))
+
+
 
 
 
 ## Uncomment this code to test so you can see easily what results from 
 #your code. DO uncomment it. DO NOT delete or change it. (You can add
 # other code above while you work, of course.)
-# provided_file_names = ["samplehw6_1.txt","samplehw6_2.txt"]
-# for ln in main_filterer(provided_file_names):
-#     print(ln.rstrip('\n'), end=" ")
+provided_file_names = ["samplehw6_1.txt","samplehw6_2.txt"]
+for ln in main_filterer(provided_file_names):
+    print(ln.rstrip('\n'), end=" ")
 #####
 
 
